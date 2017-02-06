@@ -163,3 +163,96 @@ myField: null // error
 myField: ['a', 'b'] // valid
 myField: ['a', null, 'b'] // valid
 ```
+
+## 接口 Interfaces
+
+GraphQL支持接口Interface，接口是一个抽象的类型，它包含一个fields的集合，当一个type实现这个接口的时候必须实现接口。
+
+比如，我们可以定义一个**Character**接口，表示星球大战里的任何角色：
+
+```
+interface Character {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+}
+```
+
+这意味着任何实现**Character**的类型都需要具备这些fields，比如
+
+```
+type Human implements Character {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+  starships: [Starship]
+  totalCredits: Int
+}
+
+type Droid implements Character {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+  primaryFunction: String
+}
+```
+
+在需要返回多个类型的结果时，接口比较有用，在返回结果时，默认仅能获取那些接口里面定义的公共field，如果需要访问特定类型里定义的field，则需要使用如下的inline fragment：
+
+```
+query HeroForEpisode($ep: Episode!) {
+  hero(episode: $ep) {
+    name
+    ... on Droid {
+      primaryFunction
+    }
+  }
+}
+```
+
+
+## 联合类型 Union Types
+
+联合类型类似于interface，不过并不指明类型间的相同fields
+
+```
+union SearchResult = Human | Droid | Starship
+```
+
+当返回一个SearchResult时，我们可以得到`Human`，`Droid`或者`Starship`，如果查询里面返回一个`SearchResult`类型，可以通过conditional fragment类查询各个field：
+
+```
+{
+  search(text: "an") {
+    ... on Human {
+      name
+      height
+    }
+    ... on Droid {
+      name
+      primaryFunction
+    }
+    ... on Starship {
+      name
+      length
+    }
+  }
+}
+```
+
+
+## 输入类型 Input types
+
+有时需要快捷地传递一些复杂对象，特别是在Mutation的参数传入时。在GraphQL Schema Language里，input类型和普通的对象类型一样，不过使用input而不是type关键字
+
+```
+input ReviewInput {
+  stars: Int!
+  commentary: String
+}
+```
+
+input类型的field可以指向input类型，不过不能包含参数。
