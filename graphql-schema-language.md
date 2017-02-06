@@ -98,6 +98,7 @@ scalar Date
 ## 枚举类型 Enumeration types
 
 枚举类型是一种特别的标量类型，它的值被限制于一个特定允许类型的集合。这时允许：
+
 1. Validate 这个类型的任意参数是某个允许类型
 2. 通过类型通信确保field总是有限集合的数据之一
 
@@ -111,3 +112,54 @@ enum Episode {
 ```
 
 在不同语言实现的GraphQL服务里，处理enum的方式是不一样的。有些语言直接支持enum，实现时可以利用这个机制；有些语言比如JavaScript并没有enum支持，这些值可能在内部被映射成整数集合。不过，这些实现细节都不会透露给客户端，客户端仅使用枚举类型的字符串进行操作。
+
+## 列表和非空类型 Lists and Non-Null
+
+对象，标量和枚举是在GraphQL里面仅可以定义的数据类型。不过当这些类型在schema其他地方使用时，可以添加额外的类型描述于这些类型之上。比如
+
+```
+type Character {
+  name: String!
+  appearsIn: [Episode]!
+}
+```
+
+这里首先使用了一个`String`类型，并通过添加感叹号将其标识为`Non-Null`的。另外，在定义field的参数时，也可以用这个属性如下
+
+```
+query DroidById($id: ID!) {
+  droid(id: $id) {
+    name
+  }
+}
+```
+
+类似的，可以使用方括号`[]`来定义列表，这个定义既可以使用在field里，也可以使用在argument里。
+
+最后，Non-Null和List可以混合使用，比如，可以定义一个非空字符串的列表如下
+
+```
+myField: [String!]
+```
+
+这里数组本身可以是空的，但是里面的字符串不可以是空的，比如
+
+```
+myField: null // valid
+myField: ['a', 'b'] // valid
+myField: ['a', null, 'b'] // error
+```
+
+类似的，可以定义一个非空的字符串列表如下
+
+```
+myField: [String]!
+```
+
+这时，列表本身不可以为空，但是可以包含空的元素，比如
+
+```
+myField: null // error
+myField: ['a', 'b'] // valid
+myField: ['a', null, 'b'] // valid
+```
