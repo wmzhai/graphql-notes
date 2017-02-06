@@ -42,3 +42,72 @@ type Starship {
 ```
 
 所有的field参数都会具体命名，二不像其他语言一样是一个有序的列表。也可以为参数定义默认值。
+
+## `Query`和`Mutation`类型
+
+每个GraphQL Service都有一个`query`类型，并可能有一个`mutation`类型。
+这些类型和普通对象类型一样，不过他们是每个GraphQL Query的入口点（entry point）。
+需要注意的是，除了被定义成schema的"entry point"以外，Query和Mutation类型和其他GraphQL 对象类型一样，他们的field也一样。
+
+```
+schema {
+  query: Query
+  mutation: Mutation
+}
+```
+
+如下查询意味着服务需要定义一个Query类型，具备hero和droid2个field：
+
+```
+query {
+  hero {
+    name
+  }
+  droid(id: "2000") {
+    name
+  }
+}
+```
+
+如下
+```
+type Query {
+  hero(episode: Episode): Character
+  droid(id: ID!): Droid
+}
+```
+
+Mutation类型也一样，在Mutation类型下定义field，这些是在query里面调用的root mutation field。
+
+## 标量类型 Scalar types
+
+GraphQL 对象类型具备名称和field，不过这些field最终需要被解析成具体数据，这就是标量类型存在的意义，他们代表query的叶节点。GraphQL预定义了一些默认的标量类型：
+
+* **Int** 带符号32bit整形值
+* **Float** 带符号双精度浮点值
+* **String** UTF-8字符串序列
+* **Boolean** ture或false
+* **ID** 代表唯一标识符，往往用于获取对象或者作为一个key。ID类型最终被序列号成String，不过定义为ID表示这个字段不是human-readable的。
+
+在很多GraphQL实现中，也定义了一些自定义的标量，比如可以定义`Date`类型，这是需要根据实现方式决定最终如何序列化。
+
+```
+scalar Date
+```
+
+## 枚举类型 Enumeration types
+
+枚举类型是一种特别的标量类型，它的值被限制于一个特定允许类型的集合。这时允许：
+1. Validate 这个类型的任意参数是某个允许类型
+2. 通过类型通信确保field总是有限集合的数据之一
+
+一个具体的定义如下，意味着无论何时我们使用Episode的时候，他都是`NEWHOPE`，`EMPIRE`和`JEDI`三个值之一。
+```
+enum Episode {
+  NEWHOPE
+  EMPIRE
+  JEDI
+}
+```
+
+在不同语言实现的GraphQL服务里，处理enum的方式是不一样的。有些语言直接支持enum，实现时可以利用这个机制；有些语言比如JavaScript并没有enum支持，这些值可能在内部被映射成整数集合。不过，这些实现细节都不会透露给客户端，客户端仅使用枚举类型的字符串进行操作。
