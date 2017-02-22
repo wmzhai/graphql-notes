@@ -21,6 +21,9 @@ A guide to using the latest production-ready tools to build modern apps in 2017
 
 [Part1](https://blog.hichroma.com/graphql-react-tutorial-part-1-6-d0691af25858) 
 [Part2](https://blog.hichroma.com/graphql-react-tutorial-part-2-6-d15faafd5a6f)
+[Part3](https://blog.hichroma.com/graphql-react-tutorial-part-3-6-fa2c512f5497) 
+[Part4](https://blog.hichroma.com/graphql-react-tutorial-part-4-6-9ad394e3592c)
+
 
 
 ## 学习
