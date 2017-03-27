@@ -9,7 +9,7 @@
 
 > A single query, mutation, or subscription that can be interpreted by a GraphQL execution engine.
 
-![](../imgs/simple-query.png)
+![](/imgs/simple-query.png)
 
 ## Field
 
