@@ -9,6 +9,8 @@
 
 > A single query, mutation, or subscription that can be interpreted by a GraphQL execution engine.
 
+![](../imgs/simple-query.png)
+
 ## Field
 
 > A unit of data you are asking for, which ends up as a field in your JSON response data. Note that they are always called “fields”, regardless of how deep in the query they appear. A field on the root of your operation works the same way as one nested deeper in the query.
