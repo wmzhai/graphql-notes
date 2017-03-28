@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   ApolloClient,
   gql,
@@ -38,6 +38,10 @@ const ChannelsList = ({data: { loading, error, channels }}) => {
       { channels.map(ch => <li key={ch.id}>{ch.name}</li>) }
     </ul>
   );
+};
+
+ChannelsList.propTypes = {
+  data: PropTypes.object
 };
 
 const channelsListQuery = gql`
