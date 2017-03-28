@@ -66,6 +66,6 @@
 
 > An annotation on a field, fragment, or operation that affects how it is executed or returned.
 
-## Directive arguments
+## Directive Arguments
 
 > These work just like field arguments, but they are handled by the execution engine instead of being passed down to the field resolver.
