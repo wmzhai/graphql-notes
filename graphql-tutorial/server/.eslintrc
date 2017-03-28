@@ -1,0 +1,14 @@
+{
+  "extends": ["standard"],
+  "globals": {
+    "__DEV__": false,
+    "requestAnimationFrame": true,
+    "fetch": true
+  },
+  "rules": {
+    // 必须要有逗号
+    "semi": ["error", "always"],
+    // 函数定义时遵循 function funcName() {...}
+    "space-before-function-paren": ["error", "never"]
+  }
+}

@@ -4,7 +4,7 @@ const PORT = 4000;
 
 const server = express();
 
-server.get('/', function (req, res) {
+server.get('/', function(req, res) {
   res.send('Hello World!');
 });
 
