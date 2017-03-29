@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { gql, graphql } from 'react-apollo';
-import { channelsListQuery } from './channels_list_with_data';
 
 const AddChannel = ({ mutate }) => {
   const handleKeyUp = (evt) => {
@@ -8,7 +7,16 @@ const AddChannel = ({ mutate }) => {
       evt.persist();
       mutate({
         variables: { name: evt.target.value },
-        refetchQueries: [{ query: channelsListQuery }]
+        refetchQueries: [{
+          query: gql`
+            query ChannelsListQuery {
+              channels {
+                id
+                name
+              }
+            }
+          `
+        }]
       })
       .then(res => {
         evt.target.value = '';
