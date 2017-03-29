@@ -14,4 +14,8 @@ server.use('/graphql', bodyParser.json(), graphqlExpress({
   schema
 }));
 
+server.use('/graphiql', graphiqlExpress({
+  endpointURL: '/graphql'
+}));
+
 server.listen(PORT, () => console.log(`GraphQL Server is now running on http://localhost:${PORT}`));

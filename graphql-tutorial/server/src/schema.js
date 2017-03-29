@@ -1,5 +1,6 @@
 import {
-  makeExecutableSchema
+  makeExecutableSchema,
+  addMockFunctionsToSchema
 } from 'graphql-tools';
 
 export const typeDefs = `
@@ -14,4 +15,5 @@ export const typeDefs = `
 `;
 
 const schema = makeExecutableSchema({ typeDefs });
+addMockFunctionsToSchema({ schema });
 export { schema };
