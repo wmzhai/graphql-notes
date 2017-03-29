@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
     gql,
     graphql
@@ -17,6 +17,10 @@ const ChannelsList = ({data: { loading, error, channels }}) => {
       { channels.map(ch => <div key={ch.id} className='channel'>{ch.name}</div>) }
     </div>
   );
+};
+
+ChannelsList.propTypes = {
+  data: PropTypes.object
 };
 
 const channelsListQuery = gql`
