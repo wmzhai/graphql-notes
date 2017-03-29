@@ -3,6 +3,7 @@ import {
     gql,
     graphql
 } from 'react-apollo';
+import AddChannel from './add_channel';
 
 const ChannelsList = ({data: { loading, error, channels }}) => {
   if (loading) {
@@ -11,10 +12,12 @@ const ChannelsList = ({data: { loading, error, channels }}) => {
   if (error) {
     return <p>{error.message}</p>;
   }
-
   return (
     <div className='channelsList'>
-      { channels.map(ch => <div key={ch.id} className='channel'>{ch.name}</div>) }
+      <AddChannel />
+      { channels.map(ch =>
+        (<div key={ch.id} className='channel'>{ch.name}</div>)
+      )}
     </div>
   );
 };
