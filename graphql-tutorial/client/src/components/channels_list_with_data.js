@@ -35,4 +35,6 @@ const channelsListQuery = gql`
   }
 `;
 
-export default graphql(channelsListQuery)(ChannelsList);
+export default graphql(channelsListQuery, {
+  options: { pollInterval: 5000 }
+})(ChannelsList);
