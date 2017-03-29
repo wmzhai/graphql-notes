@@ -2,9 +2,9 @@
   "name": "tutorial-server",
   "version": "1.0.0",
   "description": "A simple GraphQL server",
-  "main": "src/server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon ./src/server.js --exec babel-node -e js",
+    "start": "nodemon ./server.js --exec babel-node -e js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src"
   },

@@ -1,20 +1,15 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import './app.css';
+import ChannelsListWithData from './components/channels_list_with_data';
+
 import {
   ApolloClient,
-  gql,
-  graphql,
-  ApolloProvider
+  ApolloProvider,
 } from 'react-apollo';
-import {
-  makeExecutableSchema,
-  addMockFunctionsToSchema
-} from 'graphql-tools';
-import {
-  mockNetworkInterfaceWithSchema
-} from 'apollo-test-utils';
 
-import logo from './logo.svg';
-import './app.css';
+
+import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
+import { mockNetworkInterfaceWithSchema } from 'apollo-test-utils';
 import { typeDefs } from './schema';
 
 const schema = makeExecutableSchema({ typeDefs });
@@ -23,47 +18,15 @@ addMockFunctionsToSchema({ schema });
 const mockNetworkInterface = mockNetworkInterfaceWithSchema({ schema });
 
 const client = new ApolloClient({
-  networkInterface: mockNetworkInterface
+  networkInterface: mockNetworkInterface,
 });
-
-const ChannelsList = ({data: { loading, error, channels }}) => {
-  if (loading) {
-    return <p>Loading ...</p>;
-  }
-  if (error) {
-    return <p>{error.message}</p>;
-  }
-  return (
-    <ul>
-      { channels.map(ch => <li key={ch.id}>{ch.name}</li>) }
-    </ul>
-  );
-};
-
-ChannelsList.propTypes = {
-  data: PropTypes.object
-};
-
-const channelsListQuery = gql`
-  query ChannelsListQuery {
-    channels {
-      id
-      name
-    }
-  }
-`;
-
-const ChannelsListWithData = graphql(channelsListQuery)(ChannelsList);
 
 class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <div className='App'>
-          <div className='App-header'>
-            <img src={logo} className='App-logo' alt='logo' />
-            <h2>Welcome to Apollo</h2>
-          </div>
+        <div className="App">
+          <div className="navbar">React + GraphQL Tutorial</div>
           <ChannelsListWithData />
         </div>
       </ApolloProvider>

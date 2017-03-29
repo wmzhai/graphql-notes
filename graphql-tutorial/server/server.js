@@ -4,7 +4,7 @@ import {
   graphiqlExpress
 } from 'graphql-server-express';
 import bodyParser from 'body-parser';
-import { schema } from './schema';
+import { schema } from './src/schema';
 
 const PORT = 4000;
 
